@@ -28,7 +28,7 @@ class KNN:
 
     def get_k_neighbours(self, test_data, k):
         """
-        given a test_data matrix calculates de k nearest neighbours at each point (row) of test_data on self.neighbors
+        given a test_data matrix calculates de k nearest neighbors at each point (row) of test_data on self.neighbors
         :param test_data: array that has to be shaped to a NxD matrix (N points in a D dimensional space)
         :param k: the number of neighbors to look at
         :return: the matrix self.neighbors is created (NxK)
