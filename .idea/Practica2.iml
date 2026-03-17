@@ -3,8 +3,8 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.13" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="$USER_HOME$/miniconda3" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="$USER_HOME$/miniconda3 interpreter library" level="application" />
+    <orderEntry type="library" exported="" name="$USER_HOME$/miniconda3 interpreter library" level="application" />
   </component>
 </module>

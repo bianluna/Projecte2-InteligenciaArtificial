@@ -5,6 +5,7 @@ import numpy as np
 import math
 import operator
 from scipy.spatial.distance import cdist
+from utils import rgb2gray
 
 
 class KNN:
@@ -19,13 +20,11 @@ class KNN:
         """
         initializes the train data
         :param train_data: PxMxNx3 matrix corresponding to P color images
-        :return: assigns the train set to the matrix self.train_data shaped as PxD (P points in a D dimensional space)
+        :return: assigns the train set to the matrix self.train_data shaped as PxD (P pixel in a D dimensional = 4800 pixels space)
         """
-        #######################################################
-        ##  YOU MUST REMOVE THE REST OF THE CODE OF THIS FUNCTION
-        ##  AND CHANGE FOR YOUR OWN CODE
-        #######################################################
-        self.train_data = np.random.randint(8, size=[10, 4800])
+        train_data = np.array(train_data)
+        train_data = train_data.reshape(train_data.shape[0], -1)
+        self.train_data = train_data
 
     def get_k_neighbours(self, test_data, k):
         """
@@ -35,11 +34,13 @@ class KNN:
         :return: the matrix self.neighbors is created (NxK)
                  the ij-th entry is the j-th nearest train point to the i-th test point
         """
-        #######################################################
-        ##  YOU MUST REMOVE THE REST OF THE CODE OF THIS FUNCTION
-        ##  AND CHANGE FOR YOUR OWN CODE
-        #######################################################
-        self.neighbors = np.random.randint(k, size=[test_data.shape[0], k])
+        test_data = np.array(test_data)
+        test_data = test_data.reshape(test_data.shape[0], -1)
+        distances = cdist(test_data, self.train_data, 'euclidean')
+        distancesOrdered =np.argsort(distances, axis=1)[:, :k]
+        self.neighbors = self.labels[distancesOrdered]
+
+
 
     def get_class(self):
         """
@@ -47,11 +48,17 @@ class KNN:
         :return: 1 array of Nx1 elements. For each of the rows in self.neighbors gets the most voted value
                 (i.e. the class at which that row belongs)
         """
-        #######################################################
-        ##  YOU MUST REMOVE THE REST OF THE CODE OF THIS FUNCTION
-        ##  AND CHANGE FOR YOUR OWN CODE
-        #######################################################
-        return np.random.randint(10, size=self.neighbors.size), np.random.random(self.neighbors.size)
+        result=[]
+        for i in range(self.neighbors.shape[0]):
+            row = self.neighbors[i]
+            values, counts = np.unique(row, return_counts=True)
+            max_count = np.max(counts)
+            candidates = values[counts == max_count]
+            for label in row:
+                if label in candidates:
+                    result.append(label)
+                    break
+        return np.array(result)
 
     def predict(self, test_data, k):
         """
